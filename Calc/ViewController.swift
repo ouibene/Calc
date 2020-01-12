@@ -12,23 +12,39 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var leftField: UITextField!
     @IBOutlet weak var rightField: UITextField!
+    @IBOutlet weak var btn: UIButton!
     
+    //argument label - parameter name - parameter type
     @IBAction func process(_ sender: Any) {
  
-        let leftStr = leftField.text!
-        let rightStr = rightField.text!
+        //let leftStr = leftField.text!
+        //let rightStr = rightField.text!
+        guard let leftStr = leftField.text, let rightStr = rightField.text else {
+            //alert
+            show(message: "올바른 값을 입력해주세요")
+            return
+        }
         
         //Type conversion
-        let leftNum = Int(leftStr)!
-        let rightNum = Int(rightStr)!
+        //let leftNum = Int(leftStr)!
+        //let rightNum = Int(rightStr)!
+        guard let leftNum = Int(leftStr), let rightNum = Int(rightStr) else {
+            //alert
+            show(message: "올바른 값을 입력해주세요")
+            return
+        }
         
+        show(message: "\(leftNum) + \(rightNum) = \(leftNum+rightNum)", title: "결과")
+    }
+    
+    func show(message: String, title: String = "경고") {
         //Alert
-        let msg = "\(leftNum) + \(rightNum) = \(leftNum + rightNum)"
-        let alert = UIAlertController(title: "결과", message: msg, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        //let msg = "\(leftNum) + \(rightNum) = \(leftNum + rightNum)"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: title, style: .default, handler: { (action: UIAlertAction) -> Void in print ("확인")})
         
         alert.addAction(okAction)
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: {print("completion")})
     }
     
     override func viewDidLoad() {
